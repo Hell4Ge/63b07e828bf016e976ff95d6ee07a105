@@ -2,6 +2,7 @@
 #include "mrowisko.h"
 #include "world.h"
 #include "globalSettings.h"
+#include <fstream>
 
 using namespace std;
 
@@ -37,4 +38,22 @@ void World::pokaz(){
      for(int i=0;i<lp;i++)
          cout << punkty[i].ferom << '\t';
      cout<<endl;
+
+    if(gs_WriteFeroms)
+    {
+         ofstream myfile;
+         myfile.open ("data.txt", ios_base::app);
+
+         if(myfile.is_open())
+         {
+             for(int i=0;i<lp;i++)
+             {
+                 myfile << punkty[i].ferom << '\t';
+                 if(i+1%7==0) myfile << '\n';
+             }
+             myfile << '\n';
+             myfile.close();
+         }
+     }
+
 }

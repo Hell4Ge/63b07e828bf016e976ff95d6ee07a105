@@ -16,6 +16,7 @@ int _cykl=0;
 int ant_sum=0;
 float _feroms=0;
 
+
 void Mrowisko::WTF(bool ferom)
 {
     ofstream myfile;
@@ -23,10 +24,11 @@ void Mrowisko::WTF(bool ferom)
 
     if(myfile.is_open())
     {
-        if(ferom)
-            myfile << _cykl << '\t' << _feroms << '\n';
-        else
+        if(!ferom)
             myfile << _cykl << '\t' << ant_sum << '\n';
+        //    myfile << _cykl << '\t' << _feroms << '\n';
+        //else
+
 
         myfile.close();
     }

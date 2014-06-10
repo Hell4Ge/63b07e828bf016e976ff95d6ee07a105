@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
                 m.move(); m.pokaz(i);
                 swiat.pokaz(); cout<<endl;
 
-                swiat.decreaseFeroms();
+                if(gs_decreaseFeroms)
+                    swiat.decreaseFeroms();
             }
 
             m.WNL();
