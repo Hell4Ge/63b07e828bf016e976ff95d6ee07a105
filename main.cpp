@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
         // parametry œwiata: liczba punktów, home, food,
         //                   liczba punktów wyboru dla mrówek
 
-        for(int at=0; at<gs_attempts; at++)
+        for(unsigned int at=0; at<gs_attempts; at++)
         {
             inicjuj(swiat); // inicjacja œwiata wartoœciami
             Mrowisko m(&swiat,gs_ants,gs_fers); // parametry mrowiska: nazwa œwiata,
@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
             swiat.reset();
         }
 
-      system("PAUSE");
-      return EXIT_SUCCESS;
+      getchar();
+      return 0;
 }
 
 void inicjuj(World swiat){

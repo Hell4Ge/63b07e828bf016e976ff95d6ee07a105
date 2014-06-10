@@ -11,7 +11,7 @@ private:
 
     public:
         void recompute();
-        void print();
+        //void print();
         resultSheet();
         void AddCycle();
         void PutAnt();

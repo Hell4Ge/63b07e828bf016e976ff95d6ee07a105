@@ -13,6 +13,7 @@ void resultSheet::recompute()
     data.push_back(this->gAnts);
 }
 
+/*
 void resultSheet::print()
 {
     for(unsigned int i=0; i<data.capacity()-1; i++)
@@ -21,6 +22,7 @@ void resultSheet::print()
         std::cout << "Ants: " << data.at(i+1) << std::endl;
     }
 }
+*/
 
 void resultSheet::AddCycle()
 {

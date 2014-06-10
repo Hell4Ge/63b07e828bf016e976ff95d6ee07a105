@@ -17,7 +17,7 @@ const int gs_pathselect_points = 3;
 
 // cycles & attempts
 const unsigned int gs_cycles=8;
-const unsigned int gs_attempts=10;
+const unsigned int gs_attempts=1;
 
 // WTF - Write To File
 const bool gs_WriteFeroms = false;       // false - write number of ants in G point

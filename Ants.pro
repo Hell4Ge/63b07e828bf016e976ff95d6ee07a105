@@ -12,5 +12,6 @@ HEADERS += \
     losowy.h \
     mrowisko.h \
     world.h \
-    globalSettings.h
+    globalSettings.h \
+    resultsheet.h
 

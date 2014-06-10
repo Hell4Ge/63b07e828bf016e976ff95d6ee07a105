@@ -149,9 +149,9 @@ void Mrowka::akcja( ){
        }
 }
 void Mrowka::pokaz(){
-     cout<<syta<<"  "+sciezka+"  "<<sciezka.size()<<"  \n";
-
+     cout << syta << '\t' + sciezka + '\t' << sciezka.size() << '\n';
 }
+
 Mrowisko::Mrowisko(World *_swiat, int _lmr, float _fer)
       {lmr=_lmr; ants=new Mrowka[lmr];
        losuj_baze();
@@ -177,8 +177,8 @@ void Mrowisko::pokaz(int cykl){
         ants[i].pokaz();
 
     _cykl=cykl;
-    std::cout << "Cykl: " << _cykl << std::endl;
-    std::cout << "Mrowki: " << ant_sum << std::endl;
+    std::cout << "\nCykl: " << _cykl << std::endl;
+    std::cout << "Mrowki: " << ant_sum << "\n\n";
     WTF(gs_WriteFeroms);
     _feroms=0;
     ant_sum=0;
