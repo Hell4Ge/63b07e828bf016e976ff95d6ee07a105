@@ -18,8 +18,11 @@ void resultSheet::print()
 {
     for(unsigned int i=0; i<data.capacity()-1; i++)
     {
-        std::cout << "Cycle: " << data.at(i) << std::endl;
-        std::cout << "Ants: " << data.at(i+1) << std::endl;
+        if(gs_WriteOnScreen)
+        {
+            std::cout << "Cycle: " << data.at(i) << std::endl;
+            std::cout << "Ants: " << data.at(i+1) << std::endl;
+        }
     }
 }
 */

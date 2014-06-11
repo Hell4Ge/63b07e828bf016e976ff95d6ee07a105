@@ -16,7 +16,6 @@ int _cykl=0;
 int ant_sum=0;
 float _feroms=0;
 
-
 void Mrowisko::WTF(bool ferom)
 {
     ofstream myfile;
@@ -26,9 +25,6 @@ void Mrowisko::WTF(bool ferom)
     {
         if(!ferom)
             myfile << _cykl << '\t' << ant_sum << '\n';
-        //    myfile << _cykl << '\t' << _feroms << '\n';
-        //else
-
 
         myfile.close();
     }
@@ -117,7 +113,8 @@ void Mrowka::polej_sciezke(){
      for(unsigned int i=0;i<sciezka.size();i++)
          if(sciezka[i]!=swiat->home)
          {
-             swiat->punkty[sciezka[i]-'a'].ferom+=(feromon*gs_fer_reduction);
+             //swiat->punkty[sciezka[i]-'a'].ferom+=(feromon*gs_fer_reduction);
+             swiat->punkty[sciezka[i]-'a'].ferom+=feromon;
             _feroms = swiat->punkty[sciezka[i]-'a'].ferom;
          }
             //swiat->punkty[sciezka[i]-'a'].ferom+=feromon;
@@ -151,7 +148,7 @@ void Mrowka::akcja( ){
        }
 }
 void Mrowka::pokaz(){
-     cout << syta << '\t' + sciezka + '\t' << sciezka.size() << '\n';
+     if(gs_WriteOnScreen) cout << syta << '\t' + sciezka + '\t' << sciezka.size() << '\n';
 }
 
 Mrowisko::Mrowisko(World *_swiat, int _lmr, float _fer)
@@ -179,8 +176,11 @@ void Mrowisko::pokaz(int cykl){
         ants[i].pokaz();
 
     _cykl=cykl;
-    std::cout << "\nCykl: " << _cykl << std::endl;
-    std::cout << "Mrowki: " << ant_sum << "\n\n";
+    if(gs_WriteOnScreen)
+    {
+        std::cout << "\nCykl: " << _cykl << std::endl;
+        std::cout << "Mrowki: " << ant_sum << "\n\n";
+    }
     WTF(gs_WriteFeroms);
     _feroms=0;
     ant_sum=0;

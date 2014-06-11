@@ -8,6 +8,10 @@
 
 #include "globalSettings.h"
 
+#include <ctime>
+#include <ratio>
+#include <chrono>   // C++11 Feature
+
 using namespace std;
 
 // inicjacja œwiata
@@ -19,6 +23,8 @@ void inicjuj(World swiat); // inicjuje konkretny œwiat
 
 int main(int argc, char *argv[])
 {
+        auto c1 = std::chrono::high_resolution_clock::now();
+
         World swiat(gs_map_points,'a','g',gs_pathselect_points);
         // parametry œwiata: liczba punktów, home, food,
         //                   liczba punktów wyboru dla mrówek
@@ -28,17 +34,22 @@ int main(int argc, char *argv[])
             inicjuj(swiat); // inicjacja œwiata wartoœciami
             Mrowisko m(&swiat,gs_ants,gs_fers); // parametry mrowiska: nazwa œwiata,
             // liczba mrówek, iloœæ pozostawianego feromonu przez mrówkê
-            cout<<"---------- stan poczatkowy\n";
+
+            if(gs_WriteOnScreen) cout<<"---------- stan poczatkowy\n";
+
             m.pokaz(0);                // mrowisko - stan pocz¹tkowy
-            swiat.pokaz(); cout<<endl;// œwiat    - stan pocz¹tkowy
+            swiat.pokaz();
+
+            if(gs_WriteOnScreen) cout<<endl;// œwiat    - stan pocz¹tkowy
 
             for(unsigned int i=1;i<=gs_cycles;i++){
-                cout<<"---------- "<<i<<" cykl ----------\n";
-                m.move(); m.pokaz(i);
-                swiat.pokaz(); cout<<endl;
+                if(gs_WriteOnScreen) cout<<"---------- "<<i<<" cykl ----------\n";
 
-                if(gs_decreaseFeroms)
-                    swiat.decreaseFeroms();
+                m.move(); m.pokaz(i);
+                swiat.pokaz();
+
+                if(gs_WriteOnScreen) cout<<endl;
+                if(gs_decreaseFeroms) swiat.decreaseFeroms();
             }
 
             m.WNL();
@@ -47,8 +58,14 @@ int main(int argc, char *argv[])
             swiat.reset();
         }
 
-      getchar();
-      return 0;
+
+            auto c2 = std::chrono::high_resolution_clock::now();
+            float elapsedSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
+
+            if(gs_WriteBenchmarkTimes) cout << "Time: " << elapsedSeconds << " miliseconds" << endl;
+
+        getchar();
+        return 0;
 }
 
 void inicjuj(World swiat){

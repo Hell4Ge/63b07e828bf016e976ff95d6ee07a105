@@ -31,13 +31,16 @@ void World::decreaseFeroms()
 }
 
 void World::pokaz(){
-     for(int i=0;i<lp;i++)
-         cout << (char)punkty[i].name << '\t';
-     cout << endl;
+    if(gs_WriteOnScreen)
+    {
+         for(int i=0;i<lp;i++)
+             cout << (char)punkty[i].name << '\t';
+         cout << endl;
 
-     for(int i=0;i<lp;i++)
-         cout << punkty[i].ferom << '\t';
-     cout<<endl;
+         for(int i=0;i<lp;i++)
+             cout << punkty[i].ferom << '\t';
+         cout<<endl;
+    }
 
     if(gs_WriteFeroms)
     {
@@ -55,5 +58,4 @@ void World::pokaz(){
              myfile.close();
          }
      }
-
 }
