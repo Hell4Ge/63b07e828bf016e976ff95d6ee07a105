@@ -7,12 +7,12 @@ CONFIG += c++11
 SOURCES += main.cpp \
     mrowisko.cpp \
     world.cpp \
-    resultsheet.cpp
+    globaldata.cpp
 
 HEADERS += \
     losowy.h \
     mrowisko.h \
     world.h \
     globalSettings.h \
-    resultsheet.h
+    globaldata.h
 

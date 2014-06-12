@@ -1,8 +1,14 @@
 #include <iostream>
 #include "mrowisko.h"
 #include "world.h"
+
+#include <vector>
 #include "globalSettings.h"
+#include "globaldata.h"
+
 #include <fstream>
+
+extern std::vector<float> gd_vFer;
 
 using namespace std;
 
@@ -31,31 +37,17 @@ void World::decreaseFeroms()
 }
 
 void World::pokaz(){
-    if(gs_WriteOnScreen)
+    if(gs_printOnScreen)
     {
          for(int i=0;i<lp;i++)
              cout << (char)punkty[i].name << '\t';
          cout << endl;
 
          for(int i=0;i<lp;i++)
+         {
              cout << punkty[i].ferom << '\t';
+             gd_vFer.push_back(punkty[i].ferom);
+         }
          cout<<endl;
     }
-
-    if(gs_WriteFeroms)
-    {
-         ofstream myfile;
-         myfile.open ("data.txt", ios_base::app);
-
-         if(myfile.is_open())
-         {
-             for(int i=0;i<lp;i++)
-             {
-                 myfile << punkty[i].ferom << '\t';
-                 if(i+1%7==0) myfile << '\n';
-             }
-             myfile << '\n';
-             myfile.close();
-         }
-     }
 }

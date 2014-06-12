@@ -7,39 +7,19 @@
 #include "losowy.h"
 
 #include <fstream>
+#include <vector>
+
 #include "globalSettings.h"
+#include "globaldata.h"
+
+extern std::vector<int> gd_vAnt;
 
 using namespace std;
 const float MAX=1e6; // nie spotykana odleg³oœæ miêdzy punktami
 
-int _cykl=0;
+// Counters
+int cycle=0;
 int ant_sum=0;
-float _feroms=0;
-
-void Mrowisko::WTF(bool ferom)
-{
-    ofstream myfile;
-    myfile.open ("data.txt", ios_base::app);
-
-    if(myfile.is_open())
-    {
-        if(!ferom)
-            myfile << _cykl << '\t' << ant_sum << '\n';
-
-        myfile.close();
-    }
-}
-
-void Mrowisko::WNL()
-{
-    ofstream myfile;
-    myfile.open ("data.txt", ios_base::app);
-    if(myfile.is_open())
-    {
-        myfile << '\n';
-        myfile.close();
-    }
-}
 
 void Mrowka::policz_odleglosci(){
       int index=polozenie-'a';
@@ -110,14 +90,9 @@ int Mrowka::wybierz_punkt() {
      return wybor; 
 }
 void Mrowka::polej_sciezke(){
-     for(unsigned int i=0;i<sciezka.size();i++)
-         if(sciezka[i]!=swiat->home)
-         {
-             //swiat->punkty[sciezka[i]-'a'].ferom+=(feromon*gs_fer_reduction);
-             swiat->punkty[sciezka[i]-'a'].ferom+=feromon;
-            _feroms = swiat->punkty[sciezka[i]-'a'].ferom;
-         }
-            //swiat->punkty[sciezka[i]-'a'].ferom+=feromon;
+    for(unsigned int i=0;i<sciezka.size();i++)
+    if(sciezka[i]!=swiat->home)
+        swiat->punkty[sciezka[i]-'a'].ferom+=feromon;
 }
 void Mrowka::akcja( ){
      int index=wybierz_punkt();
@@ -148,7 +123,7 @@ void Mrowka::akcja( ){
        }
 }
 void Mrowka::pokaz(){
-     if(gs_WriteOnScreen) cout << syta << '\t' + sciezka + '\t' << sciezka.size() << '\n';
+     if(gs_printOnScreen) cout << syta << '\t' + sciezka + '\t' << sciezka.size() << '\n';
 }
 
 Mrowisko::Mrowisko(World *_swiat, int _lmr, float _fer)
@@ -171,17 +146,11 @@ void Mrowisko::move( ){
      for(int i=0;i<lmr;i++)
          if(not ants[i].syta)ants[i].akcja();
 }
-void Mrowisko::pokaz(int cykl){
+void Mrowisko::pokaz(){
     for(int i=0;i<lmr;i++)
         ants[i].pokaz();
 
-    _cykl=cykl;
-    if(gs_WriteOnScreen)
-    {
-        std::cout << "\nCykl: " << _cykl << std::endl;
-        std::cout << "Mrowki: " << ant_sum << "\n\n";
-    }
-    WTF(gs_WriteFeroms);
-    _feroms=0;
-    ant_sum=0;
+        gd_vAnt.push_back(ant_sum);
+
+        ant_sum=0;
 }

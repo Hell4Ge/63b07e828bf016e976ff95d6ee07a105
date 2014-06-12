@@ -56,9 +56,7 @@ class Mrowisko{
         // najlepeszych z trzech losowo (lub za pomoc¹ ruletki) wybranych,
         // po przesuniêciu wykonuje na ka¿dej mrówce metodê "akcja" 
         // z klasy Mrówka
-        void pokaz(int cykl);
-        void WTF(bool ferom);
-        void WNL();
+        void pokaz();
         void resetFerom();
 };        
         

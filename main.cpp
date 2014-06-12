@@ -7,7 +7,9 @@
 #include "mrowisko.h"
 
 #include "globalSettings.h"
+#include "globaldata.h"
 
+// BENCHMARK FILES
 #include <ctime>
 #include <ratio>
 #include <chrono>   // C++11 Feature
@@ -23,6 +25,7 @@ void inicjuj(World swiat); // inicjuje konkretny œwiat
 
 int main(int argc, char *argv[])
 {
+        globalData GD;
         auto c1 = std::chrono::high_resolution_clock::now();
 
         World swiat(gs_map_points,'a','g',gs_pathselect_points);
@@ -35,24 +38,24 @@ int main(int argc, char *argv[])
             Mrowisko m(&swiat,gs_ants,gs_fers); // parametry mrowiska: nazwa œwiata,
             // liczba mrówek, iloœæ pozostawianego feromonu przez mrówkê
 
-            if(gs_WriteOnScreen) cout<<"---------- stan poczatkowy\n";
+            if(gs_printOnScreen) cout<<"---------- stan poczatkowy\n";
 
-            m.pokaz(0);                // mrowisko - stan pocz¹tkowy
+            m.pokaz();                // mrowisko - stan pocz¹tkowy
             swiat.pokaz();
 
-            if(gs_WriteOnScreen) cout<<endl;// œwiat    - stan pocz¹tkowy
+            if(gs_printOnScreen) cout<<endl;// œwiat    - stan pocz¹tkowy
 
             for(unsigned int i=1;i<=gs_cycles;i++){
-                if(gs_WriteOnScreen) cout<<"---------- "<<i<<" cykl ----------\n";
+                if(gs_printOnScreen) cout<<"---------- "<<i<<" cykl ----------\n";
 
-                m.move(); m.pokaz(i);
+                m.move(); m.pokaz();
                 swiat.pokaz();
 
-                if(gs_WriteOnScreen) cout<<endl;
+                if(gs_printOnScreen) cout<<endl;
                 if(gs_decreaseFeroms) swiat.decreaseFeroms();
             }
 
-            m.WNL();
+
 
             m.reset();
             swiat.reset();
@@ -62,7 +65,12 @@ int main(int argc, char *argv[])
             auto c2 = std::chrono::high_resolution_clock::now();
             float elapsedSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
 
-            if(gs_WriteBenchmarkTimes) cout << "Time: " << elapsedSeconds << " miliseconds" << endl;
+            if(gs_printBenchmarkTimes) cout << "Time: " << elapsedSeconds << " miliseconds" << endl;
+
+
+            GD.print('a', gs_gd_WriteCycles);
+            GD.print('s', gs_gd_WriteCycles);
+            GD.print('f', gs_gd_WriteCycles);
 
         getchar();
         return 0;

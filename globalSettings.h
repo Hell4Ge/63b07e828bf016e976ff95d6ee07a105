@@ -1,31 +1,38 @@
-#ifndef GLOBAL_H
-#define GLOBAL_H
-#include "resultsheet.h"
-// dunno what ima doing
-// Map points
-const int gs_map_points=7;  // do not change
-const int gs_ants = 13;     // Ants on map
-const int gs_fers = 3;      // Power of feromons / count per ant
+#ifndef GLOBALSETTINGS_H
+#define GLOBALSETTINGS_H
 
-const bool gs_decreaseFeroms = true;
-//const float gs_fer_reduction = 1.f;               // 10%, set 1.0f to DO NOT reduce feromons on the way
-const float gs_fer_reduction_per_cycle = 4.f;     // Value-based reduction (non-percent)
+// Map points
+const int gs_map_points = 7;    // do not change
+const int gs_ants = 13;         // Ants on map
+const int gs_fers = 3;          // Power of feromons / count per ant
+
+// GENERAL SETTINGS
+const bool gs_printOnScreen         = true;
+const bool gs_printBenchmarkTimes   = true;         // C++11 ONLY!!!
+
+const bool  gs_decreaseFeroms = false;
+const float gs_fer_reduction_per_cycle = 4.f;       // Value-based reduction (non-percent)
 
 // Patchfinding changes
-const bool gs_return_home = true;       // Lab 2 Mod 1
-const bool gs_use_roulette = true;      // A way to chose next point by ant (ruletka() / losowy())
-const int gs_pathselect_points = 3;
+const bool gs_return_home = false;                  // Force ant to return to home after finding a snack
+const bool gs_use_roulette = true;                  // A way to chose next point by ant (ruletka() / losowy())
+const int  gs_pathselect_points = 3;
 
-// cycles & attempts
-const unsigned int gs_cycles=10;        // main cycle loop
-const unsigned int gs_attempts=10;       // tests = gs_attempts * gs_cycles
+// Runtime
+const unsigned int gs_cycles    = 10;                // main cycle loop
+const unsigned int gs_attempts  = 1;                 // tests = gs_attempts * gs_cycles
 
-// WTF - Write To File
-const bool gs_WriteFeroms = true;       // false - write number of ants in G point
+// Global Data (GD) class settings : WRITE
+const bool gd_gs_UseGDWrites        = true;
+const bool gs_gd_WriteAnts          = true;
+const bool gs_gd_WriteAntsSummed    = true;
+const bool gs_gd_WriteFeroms        = true;
 
-// WOS - Write On Screen
-const bool gs_WriteOnScreen = true;
-const bool gs_WriteBenchmarkTimes = true;   // C++11 ONLY!!!
-                                            // By default every line of C11 code is commented (std::chrono + includes)
+// Global Data (GD) class settings : PRINT
+const bool gs_gd_UseGDPrints        = true;
+const bool gs_gd_WriteCycles        = true;
+const bool gs_gd_PrintAnts          = true;
+const bool gs_gd_PrintAntsSummed    = true;
+const bool gs_gd_PrintFeroms        = true;
 
-#endif // GLOBAL_H
+#endif // GLOBALSETTINGS_H
