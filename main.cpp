@@ -65,12 +65,26 @@ int main(int argc, char *argv[])
             auto c2 = std::chrono::high_resolution_clock::now();
             float elapsedSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
 
-            if(gs_printBenchmarkTimes) cout << "Time: " << elapsedSeconds << " miliseconds" << endl;
+            if(gs_printBenchmarkTimes)
+                cout << "Time: " << elapsedSeconds << " miliseconds" << endl;
 
+            if(gs_gd_PrintAnts)
+                GD.print('a', gs_gd_WriteCycles);
 
-            GD.print('a', gs_gd_WriteCycles);
-            GD.print('s', gs_gd_WriteCycles);
-            GD.print('f', gs_gd_WriteCycles);
+            if(gs_gd_PrintAntsSummed)
+                GD.print('s', gs_gd_WriteCycles);
+
+            if(gs_gd_PrintFeroms)
+                GD.print('f', gs_gd_WriteCycles);
+
+            if(gs_gd_WriteAnts)
+                GD.write('a');
+
+            if(gs_gd_WriteAntsSummed)
+                GD.write('s');
+
+            if(gs_gd_WriteFeroms)
+                GD.write('f');
 
         getchar();
         return 0;
