@@ -20,6 +20,10 @@ const float MAX=1e6; // nie spotykana odleg³oœæ miêdzy punktami
 // Counters
 int cycle=0;
 int ant_sum=0;
+int biteCounter = 0;
+int foodOrderCounter = 0;
+
+globalData GD;
 
 void Mrowka::policz_odleglosci(){
       int index=polozenie-'a';
@@ -104,11 +108,28 @@ void Mrowka::akcja( ){
         case 0:
             if(gs_return_home)
             {
+                biteCounter++;
                 polozenie=swiat->food;
                 sciezka+=polozenie;
                 polej_sciezke();
                 sciezka="";
                 polozenie=swiat->home;
+                if(biteCounter>gs_anthillPoints)
+                {
+                    biteCounter=0;
+
+                    cout << "Zezarto w punkcie :" << gs_foodOrder[foodOrderCounter] << endl;
+                    foodOrderCounter++;
+                    if(foodOrderCounter == gs_orderSize)
+                    {
+                        cout << "Mapa czysta" << endl;
+                        getchar();
+                        exit(0);
+                    }
+
+                    swiat->food=gs_foodOrder[foodOrderCounter];
+                    cout << "Idziemy do: " << swiat->food << endl;
+                }
                 ant_sum++;
             }
             else
@@ -151,6 +172,7 @@ void Mrowisko::pokaz(){
         ants[i].pokaz();
 
         gd_vAnt.push_back(ant_sum);
+
 
         ant_sum=0;
 }

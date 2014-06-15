@@ -6,13 +6,19 @@
 #include "world.h"
 #include "mrowisko.h"
 
+// #include <fstream>
+
 #include "globalSettings.h"
 #include "globaldata.h"
 
-// BENCHMARK FILES
+// ========= BENCHMARK FILES =========
 #include <ctime>
-#include <ratio>
-#include <chrono>   // C++11 Feature
+// ========== C++11 SECTION ==========
+// ===================================
+#include <ratio>    // C++11 Feature - remove if neccessary
+#include <chrono>   // C++11 Feature - remove if neccessary
+// ===================================
+// ===================================
 
 using namespace std;
 
@@ -25,20 +31,24 @@ void inicjuj(World swiat); // inicjuje konkretny œwiat
 
 int main(int argc, char *argv[])
 {
-        globalData GD;
-        auto c1 = std::chrono::high_resolution_clock::now();
-
-        World swiat(gs_map_points,'a','g',gs_pathselect_points);
+        globalData GD;  // Global Data class, container for data & i/o operations
+        World swiat(gs_map_points,'a',gs_foodOrder[0],gs_pathselect_points);
         // parametry œwiata: liczba punktów, home, food,
         //                   liczba punktów wyboru dla mrówek
 
         for(unsigned int at=0; at<gs_attempts; at++)
         {
+            // ========== C++11 SECTION ==========
+            // ===================================
+            auto c1 = std::chrono::high_resolution_clock::now();
+            // ===================================
+            // ===================================
+
             inicjuj(swiat); // inicjacja œwiata wartoœciami
             Mrowisko m(&swiat,gs_ants,gs_fers); // parametry mrowiska: nazwa œwiata,
             // liczba mrówek, iloœæ pozostawianego feromonu przez mrówkê
 
-            if(gs_printOnScreen) cout<<"---------- stan poczatkowy\n";
+            if(gs_printOnScreen) cout << "---------- stan poczatkowy\n";
 
             m.pokaz();                // mrowisko - stan pocz¹tkowy
             swiat.pokaz();
@@ -55,18 +65,15 @@ int main(int argc, char *argv[])
                 if(gs_decreaseFeroms) swiat.decreaseFeroms();
             }
 
-
-
-            m.reset();
-            swiat.reset();
-        }
-
-
+            // ========== C++11 SECTION ==========
+            // ====== remove if neccessary =======
             auto c2 = std::chrono::high_resolution_clock::now();
             float elapsedSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
+            // ===================================
+            // ===================================
 
             if(gs_printBenchmarkTimes)
-                cout << "Time: " << elapsedSeconds << " miliseconds" << endl;
+                cout << "Time: " << elapsedSeconds << " milliseconds" << endl;
 
             if(gs_gd_PrintAnts)
                 GD.print('a', gs_gd_WriteCycles);
@@ -85,6 +92,12 @@ int main(int argc, char *argv[])
 
             if(gs_gd_WriteFeroms)
                 GD.write('f');
+
+            m.reset();
+            swiat.reset();
+        }
+
+
 
         getchar();
         return 0;

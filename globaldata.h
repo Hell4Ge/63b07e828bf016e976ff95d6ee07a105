@@ -7,6 +7,7 @@ public:
     globalData();
     void print(char what, bool writeCycles);
     void write(char what);
+    void writeMax(char what);
 };
 
 #endif // GLOBALDATA_H

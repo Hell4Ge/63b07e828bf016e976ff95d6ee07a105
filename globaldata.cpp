@@ -1,3 +1,4 @@
+#include "globalSettings.h"
 #include "globaldata.h"
 #include <iostream>
 #include <fstream>
@@ -77,40 +78,58 @@ void globalData::write(char what)
     if(myfile.is_open())
     {
         if(what=='a')
-        {
             for(unsigned int i=1; i<gd_vAnt.size(); i++)
                 myfile << gd_vAnt.at(i) << '\n';
 
-            myfile << '\n';
-            myfile.close();
-        }
-
         if(what=='s')  // Ants summed with previous records
         {
-            int val;
             for(unsigned int i=1; i<gd_vAnt.size(); i++)
             {
-                val=0;
+                int val=0;
                 for(int j=i; j>=0;j--)
+                {
                     val+=gd_vAnt.at(j);
+                }
 
-                    myfile << val << '\n';
+                myfile << val << '\n';
             }
-
-            myfile << '\n';
         }
-
         if(what=='f')
-        {
             for(unsigned int i=7; i<gd_vFer.size(); i++)
-            {
                 if((i%7)==0)
                     myfile <<  '\n' << gd_vFer.at(i) << '\t';
                 else
                     myfile << gd_vFer.at(i) << '\t';
-            }
 
-            myfile << "\n\n";
+        if(what=='a' || what=='s' || what=='f') myfile << '\n';
+
+        myfile.close();
+    }
+}
+
+void globalData::writeMax(char what)
+{
+    std::ofstream myfile;
+    myfile.open ("data.txt", std::ios_base::app);
+    if(myfile.is_open())
+    {
+        if(what=='s')  // Ants summed with previous records
+        {
+            int max=0;
+            for(unsigned int i=1; i<gd_vAnt.size(); i++)
+            {
+                int val=0;
+                for(int j=i; j>=0;j--)
+                {
+                    val+=gd_vAnt.at(j);
+                }
+
+                if(max<val) max=val;
+            }
+            myfile << max << '\n';
+            myfile.close();
+
+            gd_vAnt.clear();
         }
 
     }
